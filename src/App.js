@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as ml5 from 'ml5';
 import ImageUploader from 'react-images-upload';
 import Img from 'react-image'
@@ -31,9 +31,10 @@ export default function App() {
   }
 
   useEffect(() => {
-    const container = imagesRef.current
-
-    window.scrollTo(0, container.scrollHeight);
+    setTimeout(() => {
+      const container = imagesRef.current
+      container.scrollTop = container.scrollHeight;
+    }, 1000)
   }, [images])
 
   return (
@@ -73,7 +74,6 @@ export default function App() {
               <div>Label: {label}</div>
               <div>Confidence: {Math.round(confidence * 100)}%</div>
             </div>
-            
           ))}
         </div>
       </div>
