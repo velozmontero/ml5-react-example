@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import * as ml5 from 'ml5';
 import ImageUploader from 'react-images-upload';
 import Img from 'react-image'
@@ -6,6 +6,7 @@ import logo from './logo.svg';
 import './App.css';
 
 export default function App() {
+  const imagesRef = useRef(null)
   const [images, setImages] = useState([]);
 
   const classifyImage = async files => {
@@ -29,26 +30,15 @@ export default function App() {
     }
   }
 
+  useEffect(() => {
+    const container = imagesRef.current
+
+    window.scrollTo(0, container.scrollHeight);
+  }, [images])
+
   return (
     <div className="App">
       <div className="App-content">
-        <div className="images">
-          {images.map(({ src, prediction: { label, confidence } }, i) => (
-            <div key={i} className="image">
-              <Img
-                height={400}
-                src={[
-                  src,
-                  logo
-                ]}
-              />
-              <div>Label: {label}</div>
-              <div>Confidence: {Math.round(confidence * 100)}%</div>
-            </div>
-            
-          ))}
-        </div>
-
         <div className="image-uploader">
           <p>
             ML5 Version {ml5.version}
@@ -64,10 +54,27 @@ export default function App() {
               singleImage
               buttonText='Choose image'
               onChange={classifyImage}
-              imgExtension={['.jpg', '.gif', '.png', '.gif']}
+              imgExtension={['.jpg', '.gif', '.png', '.gif', '.svg']}
               maxFileSize={5242880}
             />
           </div>
+        </div>
+
+        <div ref={imagesRef} className="images">
+          {images.map(({ src, prediction: { label, confidence } }, i) => (
+            <div key={i} className="image">
+              <Img
+                width={500}
+                src={[
+                  src,
+                  logo
+                ]}
+              />
+              <div>Label: {label}</div>
+              <div>Confidence: {Math.round(confidence * 100)}%</div>
+            </div>
+            
+          ))}
         </div>
       </div>
     </div>

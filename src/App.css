@@ -5,22 +5,19 @@
 .App-content {
   background-color: #282c34;
   height: 100vh;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App-content > .images {
-  overflow-x: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 2 1;
-  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex: 1;
+  height: 100%;
 }
 
 .App-content > .images .image {
@@ -28,7 +25,9 @@
 }
 
 .App-content > .image-uploader {
-  flex: 1;
+  display: inline-block;
+  height: 300px;
+  margin: 20px;
 }
 
 .App-link {
